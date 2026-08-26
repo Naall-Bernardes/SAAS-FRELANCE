@@ -1,17 +1,16 @@
-import { Sparkles } from "lucide-react";
-import { ComingSoonPage } from "@/components/ComingSoonPage";
+import { MatchIaForm } from "@/components/match-ia/MatchIaForm";
 
 export default function MatchIaPage() {
   return (
-    <ComingSoonPage
-      icon={Sparkles}
-      title="Match IA"
-      description="Ensine a IA o que é uma boa oportunidade para você."
-      bullets={[
-        "Suas habilidades e nível, interesses e palavras-chave negativas",
-        "Valor mínimo, idiomas, disponibilidade e plataformas preferidas",
-        "Estratégia de busca: mais oportunidades, equilibrado ou alta precisão",
-      ]}
-    />
+    <div className="mx-auto max-w-3xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+      <header>
+        <h1 className="text-xl font-bold text-foreground">Match IA</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Ensine a IA o que é uma boa oportunidade para você.
+        </p>
+      </header>
+
+      <MatchIaForm />
+    </div>
   );
 }

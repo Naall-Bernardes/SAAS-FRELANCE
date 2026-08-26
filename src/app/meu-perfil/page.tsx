@@ -1,17 +1,16 @@
-import { UserCircle2 } from "lucide-react";
-import { ComingSoonPage } from "@/components/ComingSoonPage";
+import { ProfileForm } from "@/components/profile/ProfileForm";
 
 export default function MeuPerfilPage() {
   return (
-    <ComingSoonPage
-      icon={UserCircle2}
-      title="Meu Perfil"
-      description="Seu perfil profissional completo — a base que a IA usa pra calcular o Match."
-      bullets={[
-        "Bio, experiência, formação, certificações, skills e idiomas",
-        "Indicador de força do perfil e recomendações de melhoria",
-        "Valor/hora, disponibilidade e país",
-      ]}
-    />
+    <div className="mx-auto max-w-3xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+      <header>
+        <h1 className="text-xl font-bold text-foreground">Meu Perfil</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          A base que a IA usa pra calcular o Match com cada oportunidade.
+        </p>
+      </header>
+
+      <ProfileForm />
+    </div>
   );
 }

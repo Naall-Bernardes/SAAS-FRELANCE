@@ -1,17 +1,14 @@
-import { CreditCard } from "lucide-react";
-import { ComingSoonPage } from "@/components/ComingSoonPage";
+import { PlanBoard } from "@/components/plan/PlanBoard";
 
 export default function PlanoPage() {
   return (
-    <ComingSoonPage
-      icon={CreditCard}
-      title="Plano"
-      description="Seu plano atual, uso e opções de upgrade."
-      bullets={[
-        "Limites de buscas e alertas do plano atual",
-        "Histórico de cobrança",
-        "Upgrade ou downgrade de plano",
-      ]}
-    />
+    <div className="mx-auto max-w-4xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+      <header>
+        <h1 className="text-xl font-bold text-foreground">Plano</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Seu plano atual, uso e opções de upgrade.</p>
+      </header>
+
+      <PlanBoard />
+    </div>
   );
 }

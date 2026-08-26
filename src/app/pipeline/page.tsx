@@ -1,17 +1,16 @@
-import { KanbanSquare } from "lucide-react";
-import { ComingSoonPage } from "@/components/ComingSoonPage";
+import { PipelineBoard } from "@/components/pipeline/PipelineBoard";
 
 export default function PipelinePage() {
   return (
-    <ComingSoonPage
-      icon={KanbanSquare}
-      title="Pipeline"
-      description="CRM visual em Kanban, da oportunidade encontrada até o contrato fechado."
-      bullets={[
-        "Encontrada → Analisada → Proposta enviada → Respondeu → Negociação → Contratado → Perdida",
-        "Arrastar e soltar entre etapas",
-        "Valor total em pipeline, taxa de conversão e propostas aguardando resposta",
-      ]}
-    />
+    <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+      <header>
+        <h1 className="text-xl font-bold text-foreground">Pipeline</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Arraste os cards entre as etapas conforme cada oportunidade avança.
+        </p>
+      </header>
+
+      <PipelineBoard />
+    </div>
   );
 }

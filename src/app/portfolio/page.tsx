@@ -1,17 +1,16 @@
-import { FolderOpen } from "lucide-react";
-import { ComingSoonPage } from "@/components/ComingSoonPage";
+import { PortfolioBoard } from "@/components/portfolio/PortfolioBoard";
 
 export default function PortfolioPage() {
   return (
-    <ComingSoonPage
-      icon={FolderOpen}
-      title="Portfólio"
-      description="Projetos que a IA usa automaticamente ao gerar suas propostas."
-      bullets={[
-        "Nome, descrição, imagem, tecnologias e cliente",
-        "Problema solucionado e resultado alcançado",
-        "Usado automaticamente pelo gerador de propostas",
-      ]}
-    />
+    <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+      <header>
+        <h1 className="text-xl font-bold text-foreground">Portfólio</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Projetos que a IA usa automaticamente ao gerar suas propostas.
+        </p>
+      </header>
+
+      <PortfolioBoard />
+    </div>
   );
 }

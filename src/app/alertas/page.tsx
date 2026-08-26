@@ -1,17 +1,16 @@
-import { Bell } from "lucide-react";
-import { ComingSoonPage } from "@/components/ComingSoonPage";
+import { AlertsBoard } from "@/components/alerts/AlertsBoard";
 
 export default function AlertasPage() {
   return (
-    <ComingSoonPage
-      icon={Bell}
-      title="Alertas"
-      description="Alertas personalizados que avisam quando surgir a oportunidade certa."
-      bullets={[
-        "Nome, palavras-chave, plataformas, valor e Match mínimo",
-        "Frequência: instantâneo, a cada hora ou diário",
-        "Envio por sistema, e-mail, WhatsApp ou Telegram",
-      ]}
-    />
+    <div className="mx-auto max-w-4xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+      <header>
+        <h1 className="text-xl font-bold text-foreground">Alertas</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Alertas personalizados que avisam quando surgir uma oportunidade que combina com você.
+        </p>
+      </header>
+
+      <AlertsBoard />
+    </div>
   );
 }

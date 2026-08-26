@@ -43,35 +43,35 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { href: "/oportunidades", label: "Oportunidades", icon: Briefcase },
       { href: "/radar", label: "Radar", icon: Radar },
-      { href: "/salvos", label: "Salvos", icon: Bookmark, comingSoon: true },
-      { href: "/alertas", label: "Alertas", icon: Bell, comingSoon: true },
-      { href: "/minhas-buscas", label: "Minhas Buscas", icon: Search, comingSoon: true },
+      { href: "/salvos", label: "Salvos", icon: Bookmark },
+      { href: "/alertas", label: "Alertas", icon: Bell },
+      { href: "/minhas-buscas", label: "Minhas Buscas", icon: Search },
     ],
   },
   {
     label: "Comercial",
     items: [
-      { href: "/pipeline", label: "Pipeline", icon: KanbanSquare, comingSoon: true },
-      { href: "/propostas", label: "Propostas", icon: FileText, comingSoon: true },
-      { href: "/clientes", label: "Clientes", icon: Users, comingSoon: true },
+      { href: "/pipeline", label: "Pipeline", icon: KanbanSquare },
+      { href: "/propostas", label: "Propostas", icon: FileText },
+      { href: "/clientes", label: "Clientes", icon: Users },
     ],
   },
   {
     label: "Inteligência",
     items: [
-      { href: "/match-ia", label: "Match IA", icon: Sparkles, comingSoon: true },
+      { href: "/match-ia", label: "Match IA", icon: Sparkles },
       { href: "/analises", label: "Análises", icon: BarChart3 },
-      { href: "/mercado", label: "Mercado", icon: TrendingUp, comingSoon: true },
+      { href: "/mercado", label: "Mercado", icon: TrendingUp },
     ],
   },
   {
     label: "Conta",
     items: [
-      { href: "/meu-perfil", label: "Meu Perfil", icon: UserCircle2, comingSoon: true },
-      { href: "/portfolio", label: "Portfólio", icon: FolderOpen, comingSoon: true },
-      { href: "/integracoes", label: "Integrações", icon: Plug, comingSoon: true },
-      { href: "/configuracoes", label: "Configurações", icon: Settings, comingSoon: true },
-      { href: "/plano", label: "Plano", icon: CreditCard, comingSoon: true },
+      { href: "/meu-perfil", label: "Meu Perfil", icon: UserCircle2 },
+      { href: "/portfolio", label: "Portfólio", icon: FolderOpen },
+      { href: "/integracoes", label: "Integrações", icon: Plug },
+      { href: "/configuracoes", label: "Configurações", icon: Settings },
+      { href: "/plano", label: "Plano", icon: CreditCard },
     ],
   },
 ];

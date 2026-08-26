@@ -1,17 +1,14 @@
-import { Settings } from "lucide-react";
-import { ComingSoonPage } from "@/components/ComingSoonPage";
+import { SettingsForm } from "@/components/settings/SettingsForm";
 
 export default function ConfiguracoesPage() {
   return (
-    <ComingSoonPage
-      icon={Settings}
-      title="Configurações"
-      description="Preferências gerais da sua conta e do produto."
-      bullets={[
-        "Notificações e canais de alerta padrão",
-        "Idioma, fuso horário e privacidade",
-        "Gerenciamento geral da conta",
-      ]}
-    />
+    <div className="mx-auto max-w-2xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+      <header>
+        <h1 className="text-xl font-bold text-foreground">Configurações</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Preferências gerais da sua conta e do produto.</p>
+      </header>
+
+      <SettingsForm />
+    </div>
   );
 }
