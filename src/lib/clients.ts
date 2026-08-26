@@ -3,7 +3,7 @@ export type ClientStatus = "ativo" | "inativo" | "prospecto";
 export interface ClientHistoryItem {
   type: "oportunidade" | "proposta" | "mensagem" | "projeto" | "contratacao";
   label: string;
-  daysAgo: number;
+  at: string; // ISO
 }
 
 export interface Client {
@@ -16,12 +16,35 @@ export interface Client {
   status: ClientStatus;
   lastContactAt: string; // ISO
   history: ClientHistoryItem[];
+  contactName?: string;
+  email?: string;
+  phone?: string;
+  notes?: string;
 }
 
 export const STATUS_LABEL: Record<ClientStatus, string> = {
   ativo: "🟢 Ativo",
   inativo: "⚪ Inativo",
   prospecto: "🟡 Prospecto",
+};
+
+export const STATUS_OPTIONS: { value: ClientStatus; label: string }[] = [
+  { value: "prospecto", label: STATUS_LABEL.prospecto },
+  { value: "ativo", label: STATUS_LABEL.ativo },
+  { value: "inativo", label: STATUS_LABEL.inativo },
+];
+
+export const EMPTY_CLIENT: Omit<Client, "id" | "history" | "lastContactAt"> = {
+  name: "",
+  platform: "Workana",
+  country: "Brasil",
+  projectsCount: 0,
+  totalValue: 0,
+  status: "prospecto",
+  contactName: "",
+  email: "",
+  phone: "",
+  notes: "",
 };
 
 function daysAgo(days: number): string {
@@ -38,9 +61,12 @@ export const SEED_CLIENTS: Client[] = [
     totalValue: 3000,
     status: "prospecto",
     lastContactAt: daysAgo(0.1),
+    contactName: "Fernanda Andrade",
+    email: "fernanda@grupoandrade.com.br",
+    phone: "+55 11 98888-1200",
     history: [
-      { type: "oportunidade", label: "Dashboard financeiro em Power BI publicada", daysAgo: 0.1 },
-      { type: "proposta", label: "Proposta enviada", daysAgo: 0.08 },
+      { type: "oportunidade", label: "Dashboard financeiro em Power BI publicada", at: daysAgo(0.1) },
+      { type: "proposta", label: "Proposta enviada", at: daysAgo(0.08) },
     ],
   },
   {
@@ -52,12 +78,15 @@ export const SEED_CLIENTS: Client[] = [
     totalValue: 1200,
     status: "ativo",
     lastContactAt: daysAgo(8),
+    contactName: "Bruno Alma",
+    email: "bruno@studioalma.com",
+    phone: "+55 21 97777-3344",
     history: [
-      { type: "oportunidade", label: "Landing page responsiva publicada", daysAgo: 9 },
-      { type: "proposta", label: "Proposta enviada", daysAgo: 9 },
-      { type: "mensagem", label: "Cliente pediu ajuste no prazo", daysAgo: 8.7 },
-      { type: "contratacao", label: "Contrato fechado", daysAgo: 8.5 },
-      { type: "projeto", label: "Projeto em andamento", daysAgo: 8 },
+      { type: "oportunidade", label: "Landing page responsiva publicada", at: daysAgo(9) },
+      { type: "proposta", label: "Proposta enviada", at: daysAgo(9) },
+      { type: "mensagem", label: "Cliente pediu ajuste no prazo", at: daysAgo(8.7) },
+      { type: "contratacao", label: "Contrato fechado", at: daysAgo(8.5) },
+      { type: "projeto", label: "Projeto em andamento", at: daysAgo(8) },
     ],
   },
   {
@@ -69,10 +98,13 @@ export const SEED_CLIENTS: Client[] = [
     totalValue: 0,
     status: "inativo",
     lastContactAt: daysAgo(9),
+    contactName: "Sarah Miller",
+    email: "sarah@brightcart.com",
+    phone: "",
     history: [
-      { type: "oportunidade", label: "WordPress customization publicada", daysAgo: 10 },
-      { type: "proposta", label: "Proposta enviada", daysAgo: 10 },
-      { type: "mensagem", label: "Cliente escolheu outro freelancer", daysAgo: 9 },
+      { type: "oportunidade", label: "WordPress customization publicada", at: daysAgo(10) },
+      { type: "proposta", label: "Proposta enviada", at: daysAgo(10) },
+      { type: "mensagem", label: "Cliente escolheu outro freelancer", at: daysAgo(9) },
     ],
   },
   {
@@ -84,10 +116,13 @@ export const SEED_CLIENTS: Client[] = [
     totalValue: 2400,
     status: "ativo",
     lastContactAt: daysAgo(5.7),
+    contactName: "Carlos Verde",
+    email: "carlos@valeverde.com.br",
+    phone: "+55 31 96666-5566",
     history: [
-      { type: "oportunidade", label: "Automação de relatórios publicada", daysAgo: 6 },
-      { type: "proposta", label: "Proposta enviada", daysAgo: 6 },
-      { type: "mensagem", label: "Negociando prazo de entrega", daysAgo: 5.7 },
+      { type: "oportunidade", label: "Automação de relatórios publicada", at: daysAgo(6) },
+      { type: "proposta", label: "Proposta enviada", at: daysAgo(6) },
+      { type: "mensagem", label: "Negociando prazo de entrega", at: daysAgo(5.7) },
     ],
   },
   {
@@ -99,9 +134,12 @@ export const SEED_CLIENTS: Client[] = [
     totalValue: 0,
     status: "prospecto",
     lastContactAt: daysAgo(4),
+    contactName: "James Cole",
+    email: "james@northlinelabs.io",
+    phone: "",
     history: [
-      { type: "oportunidade", label: "Full-stack MVP publicada", daysAgo: 4 },
-      { type: "proposta", label: "Proposta enviada", daysAgo: 4 },
+      { type: "oportunidade", label: "Full-stack MVP publicada", at: daysAgo(4) },
+      { type: "proposta", label: "Proposta enviada", at: daysAgo(4) },
     ],
   },
   {
@@ -113,11 +151,14 @@ export const SEED_CLIENTS: Client[] = [
     totalValue: 1400,
     status: "ativo",
     lastContactAt: daysAgo(5),
+    contactName: "Emily Vector",
+    email: "emily@vectorsystems.ca",
+    phone: "+1 416 555-0132",
     history: [
-      { type: "oportunidade", label: "Consultoria SQL publicada", daysAgo: 5 },
-      { type: "proposta", label: "Proposta enviada", daysAgo: 5 },
-      { type: "mensagem", label: "Cliente respondeu com interesse", daysAgo: 5 },
-      { type: "projeto", label: "Negociação em andamento", daysAgo: 4.5 },
+      { type: "oportunidade", label: "Consultoria SQL publicada", at: daysAgo(5) },
+      { type: "proposta", label: "Proposta enviada", at: daysAgo(5) },
+      { type: "mensagem", label: "Cliente respondeu com interesse", at: daysAgo(5) },
+      { type: "projeto", label: "Negociação em andamento", at: daysAgo(4.5) },
     ],
   },
   {
@@ -129,10 +170,13 @@ export const SEED_CLIENTS: Client[] = [
     totalValue: 0,
     status: "inativo",
     lastContactAt: daysAgo(11),
+    contactName: "Rafael Cronos",
+    email: "rafael@cronosdata.com.br",
+    phone: "",
     history: [
-      { type: "oportunidade", label: "Pipeline de dados na AWS publicada", daysAgo: 12 },
-      { type: "proposta", label: "Proposta enviada", daysAgo: 12 },
-      { type: "mensagem", label: "Orçamento acima do esperado pelo cliente", daysAgo: 11 },
+      { type: "oportunidade", label: "Pipeline de dados na AWS publicada", at: daysAgo(12) },
+      { type: "proposta", label: "Proposta enviada", at: daysAgo(12) },
+      { type: "mensagem", label: "Orçamento acima do esperado pelo cliente", at: daysAgo(11) },
     ],
   },
   {
@@ -144,6 +188,9 @@ export const SEED_CLIENTS: Client[] = [
     totalValue: 0,
     status: "prospecto",
     lastContactAt: daysAgo(3),
-    history: [{ type: "oportunidade", label: "Consultoria em BI para varejo publicada", daysAgo: 3 }],
+    contactName: "Patrícia Bomdia",
+    email: "patricia@redebomdia.com.br",
+    phone: "+55 51 95555-7788",
+    history: [{ type: "oportunidade", label: "Consultoria em BI para varejo publicada", at: daysAgo(3) }],
   },
 ];
