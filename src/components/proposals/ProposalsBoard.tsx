@@ -2,18 +2,29 @@
 
 import { useMemo, useState } from "react";
 import { StatCard } from "@/components/dashboard/StatCard";
-import { Badge } from "@/components/ui/Badge";
 import { RelativeTime } from "@/components/ui/RelativeTime";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { formatCurrency } from "@/lib/format";
-import { SEED_PROPOSALS, STATUS_META, type ProposalStatus } from "@/lib/proposals";
+import { useLocalStorageState } from "@/lib/use-local-storage-state";
+import { SEED_PROPOSALS, STATUS_META, type Proposal, type ProposalStatus } from "@/lib/proposals";
 import { FileText } from "lucide-react";
 
 export function ProposalsBoard() {
+  const [proposals, setProposals] = useLocalStorageState<Proposal[]>("saas-frelance:proposals", SEED_PROPOSALS);
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<ProposalStatus | "all">("all");
 
-  const proposals = SEED_PROPOSALS;
+  function changeStatus(id: string, nextStatus: ProposalStatus) {
+    setProposals((prev) =>
+      prev.map((p) => {
+        if (p.id !== id) return p;
+        // Sair de "enviada" implica que o cliente reagiu de algum jeito —
+        // registra a resposta na hora se ainda não tiver uma.
+        const respondedAt = p.respondedAt ?? (nextStatus !== "enviada" ? new Date().toISOString() : undefined);
+        return { ...p, status: nextStatus, respondedAt };
+      })
+    );
+  }
 
   const stats = useMemo(() => {
     const total = proposals.length;
@@ -125,9 +136,7 @@ export function ProposalsBoard() {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((p) => {
-                const meta = STATUS_META[p.status];
-                return (
+              {filtered.map((p) => (
                   <tr key={p.id} className="border-b border-border last:border-0 hover:bg-surface-hover">
                     <td className="max-w-[220px] truncate px-4 py-3 font-medium text-foreground">{p.project}</td>
                     <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{p.client}</td>
@@ -139,9 +148,17 @@ export function ProposalsBoard() {
                       <RelativeTime date={new Date(p.sentAt)} />
                     </td>
                     <td className="whitespace-nowrap px-4 py-3">
-                      <Badge variant={meta.variant}>
-                        {meta.emoji} {meta.label}
-                      </Badge>
+                      <select
+                        value={p.status}
+                        onChange={(e) => changeStatus(p.id, e.target.value as ProposalStatus)}
+                        className="cursor-pointer rounded-md border border-border bg-background px-2 py-1 text-xs text-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                      >
+                        {Object.entries(STATUS_META).map(([value, m]) => (
+                          <option key={value} value={value}>
+                            {m.emoji} {m.label}
+                          </option>
+                        ))}
+                      </select>
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">{p.matchScore}%</td>
                     <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">
@@ -149,8 +166,7 @@ export function ProposalsBoard() {
                     </td>
                     <td className="max-w-[200px] truncate px-4 py-3 text-muted-foreground">{p.result}</td>
                   </tr>
-                );
-              })}
+              ))}
             </tbody>
           </table>
         </div>
