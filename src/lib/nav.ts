@@ -7,6 +7,7 @@ import {
   Search,
   KanbanSquare,
   FileText,
+  Wand2,
   Users,
   Sparkles,
   BarChart3,
@@ -53,6 +54,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { href: "/pipeline", label: "Pipeline", icon: KanbanSquare },
       { href: "/propostas", label: "Propostas", icon: FileText },
+      { href: "/gerador-propostas", label: "Gerador de Propostas", icon: Wand2 },
       { href: "/clientes", label: "Clientes", icon: Users },
     ],
   },

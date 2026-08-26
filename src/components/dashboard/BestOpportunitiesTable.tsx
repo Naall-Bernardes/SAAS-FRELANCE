@@ -77,7 +77,7 @@ export function BestOpportunitiesTable() {
                       <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.75} />
                     </a>
                     <a
-                      href="/propostas"
+                      href={`/gerador-propostas?opportunidade=${op.id}`}
                       title="Gerar proposta"
                       className="flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground hover:bg-surface-hover hover:text-foreground"
                     >

@@ -81,7 +81,7 @@ export function OpportunityCard({ op, saved, onToggleSave, onIgnore }: Opportuni
           Analisar
         </a>
         <a
-          href="/propostas"
+          href={`/gerador-propostas?opportunidade=${op.id}`}
           className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-surface-hover"
         >
           <Wand2 className="h-3.5 w-3.5" strokeWidth={1.75} />
