@@ -1,0 +1,64 @@
+// Schema do banco de dados do SAAS-FRELANCE
+// Rode `npm run prisma:migrate` após configurar DATABASE_URL no .env
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Uma fonte de oportunidades (Workana, Upwork, 99Freelas, Freelancer.com...)
+model Source {
+  id            String        @id @default(cuid())
+  key           String        @unique // slug estável: "workana" | "upwork" | "99freelas" | "freelancer"
+  name          String
+  opportunities Opportunity[]
+  createdAt     DateTime      @default(now())
+}
+
+// Uma vaga/projeto de freelance, normalizada a partir de uma fonte externa
+model Opportunity {
+  id          String   @id @default(cuid())
+  source      Source   @relation(fields: [sourceId], references: [id])
+  sourceId    String
+  externalId  String // id da vaga no site de origem
+  title       String
+  description String   @db.Text
+  url         String
+  budgetMin   Float?
+  budgetMax   Float?
+  currency    String?
+  category    String?
+  skills      String[]
+  postedAt    DateTime?
+  fetchedAt   DateTime @default(now())
+  raw         Json? // payload original, útil para depuração
+
+  @@unique([sourceId, externalId])
+  @@index([category])
+  @@index([postedAt])
+}
+
+// Usuário do SaaS (dono de buscas salvas / alertas)
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String?
+  savedSearches SavedSearch[]
+  createdAt     DateTime       @default(now())
+}
+
+// Uma busca/filtro salvo pelo usuário, usada para alertas futuros
+model SavedSearch {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  keywords  String?
+  category  String?
+  minBudget Float?
+  sources   String[] // keys de Source, ex: ["workana", "freelancer"]
+  createdAt DateTime @default(now())
+}
