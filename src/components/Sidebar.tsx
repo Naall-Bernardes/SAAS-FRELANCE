@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Sparkles, X } from "lucide-react";
-import { NAV_GROUPS } from "@/lib/nav";
+import { NAV_GROUPS, findNavItem } from "@/lib/nav";
 
 interface SidebarProps {
   mobileOpen: boolean;
@@ -12,6 +12,7 @@ interface SidebarProps {
 
 export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const activeHref = findNavItem(pathname)?.href;
 
   return (
     <>
@@ -50,8 +51,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
               </p>
               <div className="space-y-0.5">
                 {group.items.map((item) => {
-                  const active =
-                    pathname === item.href || (item.href !== "/" && pathname.startsWith(`${item.href}/`));
+                  const active = item.href === activeHref;
                   const Icon = item.icon;
                   return (
                     <Link

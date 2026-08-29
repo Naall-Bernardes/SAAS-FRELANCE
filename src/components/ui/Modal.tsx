@@ -3,16 +3,24 @@
 import { X } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 
+const SIZE_CLASSES = {
+  md: "max-w-lg",
+  lg: "max-w-3xl",
+};
+
 export function Modal({
   open,
   onClose,
   title,
   children,
+  size = "md",
 }: {
   open: boolean;
   onClose: () => void;
   title: string;
   children: ReactNode;
+  /** largura do modal — "md" (padrão, formulários simples) ou "lg" (conteúdo mais denso, ex: calculadora) */
+  size?: keyof typeof SIZE_CLASSES;
 }) {
   useEffect(() => {
     if (!open) return;
@@ -32,7 +40,7 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-border bg-surface p-6 shadow-popover"
+        className={`relative max-h-[85vh] w-full ${SIZE_CLASSES[size]} overflow-y-auto rounded-2xl border border-border bg-surface p-6 shadow-popover`}
       >
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-base font-semibold text-foreground">{title}</h2>

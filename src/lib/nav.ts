@@ -17,6 +17,9 @@ import {
   Plug,
   Settings,
   CreditCard,
+  Gavel,
+  Building2,
+  Car,
   type LucideIcon,
 } from "lucide-react";
 
@@ -47,6 +50,14 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/salvos", label: "Salvos", icon: Bookmark },
       { href: "/alertas", label: "Alertas", icon: Bell },
       { href: "/minhas-buscas", label: "Minhas Buscas", icon: Search },
+    ],
+  },
+  {
+    label: "Leilões",
+    items: [
+      { href: "/leiloes", label: "Leilões", icon: Gavel },
+      { href: "/leiloes/imoveis", label: "Imóveis", icon: Building2 },
+      { href: "/leiloes/veiculos", label: "Veículos", icon: Car },
     ],
   },
   {
@@ -81,7 +92,14 @@ export const NAV_GROUPS: NavGroup[] = [
 export const ALL_NAV_ITEMS: NavItem[] = NAV_GROUPS.flatMap((g) => g.items);
 
 export function findNavItem(pathname: string): NavItem | undefined {
-  return ALL_NAV_ITEMS.find(
-    (item) => pathname === item.href || (item.href !== "/" && pathname.startsWith(`${item.href}/`))
+  const exact = ALL_NAV_ITEMS.find((item) => pathname === item.href);
+  if (exact) return exact;
+
+  // Nenhum match exato — pega o item cujo href é o prefixo mais específico
+  // (mais longo) do pathname, pra telas aninhadas (ex: /leiloes/imoveis)
+  // não caírem no item "pai" (/leiloes) só por ele aparecer antes na lista.
+  const prefixMatches = ALL_NAV_ITEMS.filter(
+    (item) => item.href !== "/" && pathname.startsWith(`${item.href}/`)
   );
+  return prefixMatches.sort((a, b) => b.href.length - a.href.length)[0];
 }
