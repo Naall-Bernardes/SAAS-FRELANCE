@@ -62,3 +62,44 @@ model SavedSearch {
   sources   String[] // keys de Source, ex: ["workana", "freelancer"]
   createdAt DateTime @default(now())
 }
+
+// --- Módulo Leilões (imóveis e veículos) ---------------------------------
+
+// Uma fonte de leilões (Caixa, Leilo...)
+model AuctionSource {
+  id        String           @id @default(cuid())
+  key       String           @unique // slug estável: "caixa" | "leilo"
+  name      String
+  kind      String // "imovel" | "veiculo" — tipo de bem que essa fonte lista
+  listings  AuctionListing[]
+  createdAt DateTime         @default(now())
+}
+
+// Um lote de leilão (imóvel ou veículo), normalizado a partir de uma fonte externa
+model AuctionListing {
+  id          String        @id @default(cuid())
+  source      AuctionSource @relation(fields: [sourceId], references: [id])
+  sourceId    String
+  externalId  String // id do lote/imóvel no site de origem
+  kind        String // "imovel" | "veiculo"
+  title       String
+  description String        @db.Text
+  url         String
+  city        String?
+  state       String?
+  category    String? // "Casa" | "Apartamento" | "Terreno" | "Carro" | "Moto" | "Pesado" ...
+  evaluationValue Float? // valor de avaliação/mercado (imóvel) ou tabela FIPE (veículo)
+  minBidValue Float? // valor mínimo de lance / venda no leilão
+  discountPct Float? // deságio em relação à avaliação, quando informado pela fonte
+  auctionDate DateTime?
+  modality    String? // "Venda Online" | "Leilão SFI" | "1ª Praça" | "2ª Praça" ...
+  occupied    Boolean? // imóvel ocupado — afeta custo/tempo de imissão na posse
+  imageUrl    String?
+  fetchedAt   DateTime      @default(now())
+  raw         Json? // payload original, útil para depuração
+
+  @@unique([sourceId, externalId])
+  @@index([kind])
+  @@index([state])
+  @@index([category])
+}
